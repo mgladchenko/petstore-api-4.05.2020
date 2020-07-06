@@ -3,7 +3,6 @@ package tests;
 import endpoints.PetEndpoint;
 import models.Category;
 import models.Pet;
-import models.Status;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.After;
@@ -11,10 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static models.Status.*;
-
 @RunWith(SerenityRunner.class)
-public class UpdatePetTests {
+public class UploadPetImageTests {
+
     private Long petId;
 
     @Steps
@@ -38,13 +36,7 @@ public class UpdatePetTests {
     }
 
     @Test
-    public void updatePet() {
-        Pet pet = Pet.builder()
-                .id(petId)
-                .name("pet1")
-                .status(SOLD)
-                .build();
-        petEndPoints.updatePet(pet);
+    public void uploadPetImage() {
+        petEndPoints.uploadPetImage(petId, "/test/a-cat.png");
     }
-
 }

@@ -6,9 +6,13 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import models.Pet;
+import models.Status;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 
+import java.io.File;
+
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 
 public class PetEndpoint {
@@ -18,6 +22,7 @@ public class PetEndpoint {
     public final static String DELETE_PET = "/pet/{petId}";
     public final static String GET_PET = "/pet/{petId}";
     public final static String GET_PET_BY_STATUS = "/pet/findByStatus";
+    public final static String UPLOAD_PET_IMAGE = "/pet/{petId}/uploadImage";
 
     static {
         SerenityRest.filters(new RequestLoggingFilter(LogDetail.ALL));
@@ -41,12 +46,12 @@ public class PetEndpoint {
     }
 
     @Step
-    public void getPetByStatus(String status) {
+    public void getPetByStatus(Status status) {
         given()
                 .param("status", status)
                 .get(GET_PET_BY_STATUS)
                 .then()
-                .body("[0].status", is(status)) //ToDo: verify each element in array
+                .body("[0].status", is(status.toString())) //ToDo: verify each element in array
                 .statusCode(200);
     }
 
@@ -68,6 +73,18 @@ public class PetEndpoint {
                 .put(UPDATE_PET)
                 .then()
                 .body("name", is(pet.getName()))
+                .statusCode(200);
+    }
+
+    @Step
+    public void uploadPetImage(Long petId, String relativeFilePath) {
+        File imageFile = new File(getClass().getResource(relativeFilePath).getFile());
+        given()
+                .contentType("multipart/form-data")
+                .multiPart(imageFile)
+                .post(UPLOAD_PET_IMAGE, petId)
+                .then()
+                .body("message", containsString(imageFile.getName()))
                 .statusCode(200);
     }
 
