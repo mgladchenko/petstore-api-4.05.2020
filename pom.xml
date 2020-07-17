@@ -36,6 +36,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <org.slf4j.simpleLogger.showDateTime>true</org.slf4j.simpleLogger.showDateTime>
+                        <org.slf4j.simpleLogger.dateTimeFormat>yyyy-MM-dd HH:mm:ss Z</org.slf4j.simpleLogger.dateTimeFormat>
+                    </systemPropertyVariables>
                     <includes>
                         <include>**/tests/**/${test.name}.java</include>
                     </includes>

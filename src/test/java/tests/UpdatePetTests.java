@@ -1,6 +1,7 @@
 package tests;
 
 import endpoints.PetEndpoint;
+import lombok.extern.slf4j.Slf4j;
 import models.Category;
 import models.Pet;
 import models.Status;
@@ -10,11 +11,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static models.Status.*;
 
+@Slf4j
 @RunWith(SerenityRunner.class)
 public class UpdatePetTests {
+
     private Long petId;
 
     @Steps
@@ -30,6 +35,7 @@ public class UpdatePetTests {
                         .build())
                 .build();
         petId = petEndPoints.createPet(pet);
+        log.info(String.format("Created Pet with id = %s", petId));
     }
 
     @After

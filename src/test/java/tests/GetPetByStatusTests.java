@@ -35,7 +35,7 @@ public class GetPetByStatusTests {
     public static Collection<Object[]> testData(){
         return Arrays.asList(new Object[][]{
                 {AVAILABLE},
-                {SOLD}
+                //{SOLD}
         });
     }
 

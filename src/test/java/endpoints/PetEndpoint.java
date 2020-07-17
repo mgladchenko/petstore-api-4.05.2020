@@ -12,8 +12,8 @@ import net.thucydides.core.annotations.Step;
 
 import java.io.File;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
+import static config.ConfigProperties.BASE_URL;
+import static org.hamcrest.CoreMatchers.*;
 
 public class PetEndpoint {
 
@@ -32,7 +32,7 @@ public class PetEndpoint {
     private RequestSpecification given() {
         return SerenityRest
                 .given()
-                .baseUri("https://petstore.swagger.io/v2")
+                .baseUri(BASE_URL)
                 .contentType("application/json");
     }
 
@@ -47,12 +47,19 @@ public class PetEndpoint {
 
     @Step
     public void getPetByStatus(Status status) {
-        given()
+        ValidatableResponse response = given()
                 .param("status", status)
                 .get(GET_PET_BY_STATUS)
                 .then()
-                .body("[0].status", is(status.toString())) //ToDo: verify each element in array
+                .body("status", everyItem(is(status.toString())))
                 .statusCode(200);
+
+
+        System.out.println(String.valueOf(response.extract().path("findAll {it -> it.status == 'available'}")));
+
+
+        //.extract().path("data.offerings.find { it -> it.name == '%s' }.id", name);
+        //.body("[0].status", is(status.toString())) //ToDo: verify each element in array
     }
 
     @Step
@@ -61,7 +68,7 @@ public class PetEndpoint {
                 .body(pet)
                 .post(CREATE_PET)
                 .then()
-                .body("name" , is(pet.getName()))
+                .body("name", is(pet.getName()))
                 .statusCode(200);
         return response.extract().path("id");
     }
