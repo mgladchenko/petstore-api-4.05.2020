@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static config.ConfigProperties.USER_EMAIL;
+import static config.ConfigProperties.USER_PASSWORD;
 import static models.Status.*;
 
 @Slf4j
@@ -45,6 +47,9 @@ public class UpdatePetTests {
 
     @Test
     public void updatePet() {
+        System.out.println(USER_EMAIL);
+        System.out.println(USER_PASSWORD);
+
         Pet pet = Pet.builder()
                 .id(petId)
                 .name("pet1")

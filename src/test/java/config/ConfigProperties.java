@@ -13,11 +13,13 @@ public class ConfigProperties {
 
     private static final Properties props = new Properties();
     private static final String PATH_TO_RESOURCES;
-    public final static String BASE_URL;
+    public static final String BASE_URL;
+    public static final String USER_EMAIL;
+    public static final String USER_PASSWORD;
     public static final String env;
 
     static {
-        env = System.getProperty("env", "stg");
+        env = System.getProperty("env", "int");
         log.info("C  O  N  F  I  G  U  R  A  T  I  O  N");
         log.info("JVM timezone: {}", TimeZone.getDefault().getID());
         log.info("Environment : " + env);
@@ -25,6 +27,8 @@ public class ConfigProperties {
         readProperties();
 
         BASE_URL = getProperty("base.url");
+        USER_EMAIL = getProperty("user.email");
+        USER_PASSWORD = getProperty("user.password");
     }
 
     private static String getProperty(String propertyName, String defaultValue) {

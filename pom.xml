@@ -16,6 +16,7 @@
         <surefire.version>2.20</surefire.version>
         <source.encoding>UTF-8</source.encoding>
         <java.version>8</java.version>
+        <env>int</env>
         <test.name>*</test.name>
     </properties>
 
@@ -37,11 +38,12 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <systemPropertyVariables>
+                        <env>${env}</env>
                         <org.slf4j.simpleLogger.showDateTime>true</org.slf4j.simpleLogger.showDateTime>
                         <org.slf4j.simpleLogger.dateTimeFormat>yyyy-MM-dd HH:mm:ss Z</org.slf4j.simpleLogger.dateTimeFormat>
                     </systemPropertyVariables>
                     <includes>
-                        <include>**/tests/**/${test.name}.java</include>
+                        <include>**/tests/${test.name}.java</include>
                     </includes>
                     <testFailureIgnore>true</testFailureIgnore>
                     <skip>false</skip>
