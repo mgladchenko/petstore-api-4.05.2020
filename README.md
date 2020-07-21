@@ -6,3 +6,6 @@ Simple Serenity REST api project for https://petstore.swagger.io/
 **View Serenity HTML report:**  
 `mvn serenity:aggregate`
 /target/site/serenity/index.html
+
+To run specific test class on specific env:  
+`mvn clean verify -Denv=stg -Dtest.name=GetPetTests`
